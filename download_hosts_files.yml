@@ -1,0 +1,17 @@
+---
+- hosts: all
+
+  tasks:
+    # Get the local /etc/hosts content
+    - name: Get the local /etc/hosts content
+      ansible.builtin.command: cat /etc/hosts
+      become: true
+      become_user: root
+      register: hosts
+
+    # Store /etc/hosts content locally
+    - name: Store /etc/hosts content locally
+      copy:
+        content: "{{ hosts.stdout }}"
+        dest: tmp/{{ ansible_hostname }}_hosts
+      delegate_to: localhost

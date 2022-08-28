@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: true
+  become_user: root
+  gather_facts: false
+
+  tasks:
+    # Stop local ntp service
+    - name: Stop chronyd service
+      ansible.builtin.service:
+        name: chronyd
+        state: stopped
+
+    # Update ntp from external source
+    - name: Update ntp from external source
+      ansible.builtin.command: /usr/sbin/chronyd -q 0.rhel.pool.ntp.org
+      register: chronyd_command
+      changed_when: chronyd_command.rc != 0
+
+    # Start ntp service
+    - name: Start chronyd service
+      ansible.builtin.service:
+        name: chronyd
+        state: started
+        enabled: true

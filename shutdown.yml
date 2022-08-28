@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: true
+  become_user: root
+  gather_facts: false
+
+  tasks:
+    # shutdown local server
+    - name: Shutdown local server
+      ansible.builtin.command: /sbin/shutdown --halt +1 "Ansible DevOps warning!!! This machine will be automatically shutdown in 1 minute ..."
+      register: shutdown_command
+      changed_when: shutdown_command.rc != 0

@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: true
+  become_user: root
+  gather_facts: false
+  
+  tasks:
+    # Stop firewalld
+    - name: Stop firewalld
+      ansible.builtin.service:
+        name: firewalld.service
+        state: stopped
+        enabled: false
