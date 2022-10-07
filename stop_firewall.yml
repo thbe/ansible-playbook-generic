@@ -3,7 +3,7 @@
   become: true
   become_user: root
   gather_facts: false
-  
+
   tasks:
     # Stop firewalld
     - name: Stop firewalld
