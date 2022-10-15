@@ -1,12 +1,12 @@
 ---
-- hosts: all
+- name: Reboot servers
+  hosts: all
   become: true
   become_user: root
   gather_facts: false
 
   tasks:
-    # Reboot local server
-    - name: Reboot local server
+    - name: Reboot defined server
       ansible.builtin.command: /sbin/shutdown --reboot +1 "Ansible DevOps Warning!!! This machine will be automatically rebooted in 1 minute ..."
       register: reboot_command
       changed_when: reboot_command.rc != 0

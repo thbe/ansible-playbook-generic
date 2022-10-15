@@ -1,15 +1,16 @@
 ---
-- hosts: all
+- name: Display uptime in days and recommend reboot if required
+  hosts: all
   become: true
   become_user: root
   gather_facts: true
 
   tasks:
     - name: Setting local fact for number of days
-      set_fact:
-        uptime_days: "{{ (ansible_uptime_seconds|int / 86400) | round(0) }}"
+      ansible.builtin.set_fact:
+        uptime_days: "{{ (ansible_uptime_seconds | int / 86400) | round(0) }}"
 
     - name: Display hosts with an uptime more than a month
-      debug:
+      ansible.builtin.debug:
         msg: "{{ ansible_hostname }} has not been rebooted since {{ uptime_days }} days,which is older than a month"
       when: (uptime_days | int) > 30
