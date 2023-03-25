@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  lint:
+  linter:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,5 +26,5 @@ jobs:
             yamllint
       - run: "yamllint --list-files ."
         working-directory: ${{ github.workspace }}
-      - run: "ansible-lint -vv --force-color ."
+      - run: "ansible-lint -v --force-color ."
         working-directory: ${{ github.workspace }}
