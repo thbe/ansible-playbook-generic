@@ -4,9 +4,11 @@
 
   tasks:
     - name: Register output of hosts in hosts_content
-      ansible.builtin.command: cat /etc/hosts
+      ansible.builtin.command:
+        cmd: cat /etc/hosts
       register: hosts_content
-      changed_when: hosts_content.rc != 0
+      changed_when: hosts_content.rc == 0
+      failed_when: hosts_content.rc != 0
       become: true
       become_user: root
 
